@@ -1,0 +1,81 @@
+﻿@page
+@using Migyston_web_app.Models
+@model Migyston_web_app.Pages.ServiceModel
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h1>Product List</h1>
+<form method="post" class="card p-3">
+    <div class="row">
+        <div asp-validation-summary="All"></div>
+    </div>
+    <div class="form-group mb-0 align-middle">
+        <label asp-for="NewProduct.product_title">Name:</label>
+        <input type="text" asp-for="NewProduct.product_title" class="mr-5">
+
+        <label asp-for="NewProduct.ean_number">EAN:</label>
+        <input type="text" asp-for="NewProduct.ean_number" class="mr-5">
+
+        <label asp-for="NewProduct.product_description">Description:</label>
+        <input type="text" asp-for="NewProduct.product_description" class="mr-5">
+
+        <label asp-for="NewProduct.price">Price:</label>
+        <input type="number" asp-for="NewProduct.price" class="mr-5" />
+
+        <label asp-for="NewProduct.amount_storage">Amount:</label>
+        <input type="number" asp-for="NewProduct.amount_storage" class="mr-5" />
+
+        <label asp-for="NewProduct.expiration_date">Exp. Date</label>
+        <input type="text" asp-for="NewProduct.expiration_date" class="mr-5" />
+
+        <label asp-for="NewProduct.category">Category</label>
+        <select asp-for="NewProduct.category" asp-items="Html.GetEnumSelectList<ProductSize>()" class="mr-5"></select>
+
+        <label asp-for="NewProduct.isSwedish">Made in Sweden</label>
+        <input type="checkbox" asp-for="NewProduct.isSwedish" class="mr-5">
+
+
+        <button class="btn btn-primary">Add</button>
+    </div>
+</form>
+
+<table class="table mt-5">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">EAN #</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Exp. Date</th>
+            <th scope="col">Category</th>
+            <th scope="col">Swedish?</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    @foreach (var product in Model.products)
+    {
+        <tr>
+            <td>@product.product_title</td>
+            <td>@product.ean_number</td>
+            <td>@product.product_description</td>
+            <td>@($"{product.price:C}")</td>
+            <td>@product.amount_storage</td>
+            <td>@product.expiration_date</td>
+            <td>@product.category</td>
+            <td>@Model.IsSwedish(product)</td>
+
+
+            <td>
+                <form method="post" asp-page-handler="Delete" asp-route-id="@product.id">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
