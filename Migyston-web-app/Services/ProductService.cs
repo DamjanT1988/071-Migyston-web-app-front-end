@@ -70,31 +70,33 @@ namespace Migyston_web_app.Services
             //serialize the list to a variable
             //string json = JsonSerializer.Serialize(Products);
 
-            var product = new Product();
-            product.product_title = "John Doe";
-            product.ean_number = "gardener";
-            product.product_description = "gardener";
-            product.amount_storage = 2;
-            product.price = 7;
-            product.expiration_date = "gardener";
-            product.category = 0;
-            product.isSwedish = true;
+            for (int i = 0; i < Products.Count; i++)
+            {
+                var product = new Product();
+                product.product_title = Products[i].product_title;
+                product.ean_number = Products[i].ean_number;
+                product.product_description = Products[i].product_description;
+                product.amount_storage = Products[i].amount_storage;
+                product.price = Products[i].price;
+                product.expiration_date = Products[i].expiration_date;
+                product.category = Products[i].category;
+                product.isSwedish = Products[i].isSwedish;
 
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(product);
-            var data = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(product);
+                var data = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
 
-            var url = "http://localhost:5014/Product";
-            using var client = new HttpClient();
+                var url = "http://localhost:5014/Product";
+                using var client = new HttpClient();
 
-            client.DefaultRequestHeaders.ConnectionClose = true;
+                client.DefaultRequestHeaders.ConnectionClose = true;
 
-            var response = await client.PostAsync(url, data);
+                var response = await client.PostAsync(url, data);
 
-            string result = response.Content.ReadAsStringAsync().Result;
-            Console.WriteLine(result);
+                string result = response.Content.ReadAsStringAsync().Result;
+                Console.WriteLine(result);
 
+            }
         }
-
         //Define your static method which will make the method become part of the class
         //Also make it asynchronous meaning it is retrieving data from a api.
         //Have it void since your are logging the result into the console.
