@@ -7,14 +7,15 @@ namespace Migyston_web_app.Pages
 {
     public class ServiceModel : PageModel
     {
+
         public List<Product> products = new();
         [BindProperty]
         public Product NewProduct { get; set; } = new();
 
         public void OnGet()
         {
-            //ProductService.GetProducts();
             products = ProductService.GetAll();
+
         }
 
         
@@ -38,5 +39,6 @@ namespace Migyston_web_app.Pages
             ProductService.Delete(id);
             return RedirectToAction("Get");
         }
+
     }
 }

@@ -14,24 +14,24 @@ using System.Runtime.CompilerServices;
 using System.Reflection.Metadata;
 using System.Collections.Specialized;
 using System.Net;
-
 namespace Migyston_web_app.Services
 {
 
     public static class ProductService
     {
         
-        //static dynamic Data { get; }
         static List<Product> Products { get; }
+        static int nextId = 0;
 
-        //public List<Product> Products2 = new List<Product>();
-        static int nextId = 1;
-        //static HttpClient client = new HttpClient();
+        //constructor
         static ProductService()
         {
-            GetProducts();
             Products = new List<Product> { };
+            GetProducts();
         }
+        
+
+//---CRUD FUNCTIONALITY
         public static List<Product> GetAll()
         {
             return Products;
@@ -103,79 +103,48 @@ namespace Migyston_web_app.Services
             //Define your base url
             string baseURL = "https://localhost:7014/Product";
             //Have your api call in try/catch block.
-            try
+
+            //Now we will have our using directives which would have a HttpClient 
+            using (HttpClient client = new HttpClient())
             {
-                //Now we will have our using directives which would have a HttpClient 
-                using (HttpClient client = new HttpClient())
+                //Now get your rsponse from the client from get request to baseurl.
+                //Use the await keyword since the get request is asynchronous, and want it run before next asychronous operation.
+                using (HttpResponseMessage res = await client.GetAsync(baseURL))
                 {
-                    //Now get your rsponse from the client from get request to baseurl.
-                    //Use the await keyword since the get request is asynchronous, and want it run before next asychronous operation.
-                    using (HttpResponseMessage res = await client.GetAsync(baseURL))
+                    //Now we will retrieve content from our response, which would be HttpContent, retrieve from the response Content property.
+                    using (HttpContent content = res.Content)
                     {
-                        //Now we will retrieve content from our response, which would be HttpContent, retrieve from the response Content property.
-                        using (HttpContent content = res.Content)
+                        //Retrieve the data from the content of the response, have the await keyword since it is asynchronous.
+                        string data = await content.ReadAsStringAsync();
+
+
+
+                        dynamic obj = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+
+
+                        for (int i = 0; i < obj.Count; i++)
                         {
-                            //Retrieve the data from the content of the response, have the await keyword since it is asynchronous.
-                            string data = await content.ReadAsStringAsync();
 
-
-
-                            dynamic obj = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
-
-
-                            for (int i = 0; i < obj.Count; i++)
+                            Products.Add(new Product
                             {
-
-                                Products.Add(new Product
-                                {
-                                    id = obj[i].id,
-                                    product_title = obj[i].product_title,
-                                    ean_number = obj[i].ean_number,
-                                    product_description = obj[i].product_description,
-                                    price = obj[i].price,
-                                    amount_storage = obj[i].amount_storage,
-                                    expiration_date = obj[i].expiration_date,
-                                    category = obj[i].category,
-                                    isSwedish = obj[i].isSwedish
-                                });
-                            }
-
-
-                            //return obj;
-
-                            //var dataObj = JObject.Parse(data);
-
-
-                            //If the data is not null, parse the data to a C# object, then create a new instance of PokeItem.
-                            /*
-                             if (data != null)
-                            {
-                                //Parse your data into a object.
-                                var dataObj = JObject.Parse(data);
-                                //Then create a new instance of PokeItem, and string interpolate your name property to your JSON object.
-                                //Which will convert it to a string, since each property value is a instance of JToken.
-                                   //PokeItem pokeItem = new PokeItem(name: $"{dataObj["name"]}");
-                                //Log your pokeItem's name to the Console.
-                                Console.WriteLine("Pokemon Name: {0}", dataObj);
-                            }
-                            else
-                            {
-                                //If data is null log it into console.
-                                Console.WriteLine("Data is null!");
-                            }
-                            */
+                                id = obj[i].id,
+                                product_title = obj[i].product_title,
+                                ean_number = obj[i].ean_number,
+                                product_description = obj[i].product_description,
+                                price = obj[i].price,
+                                amount_storage = obj[i].amount_storage,
+                                expiration_date = obj[i].expiration_date,
+                                category = obj[i].category,
+                                isSwedish = obj[i].isSwedish
+                            });
                         }
                     }
                 }
-                //Catch any exceptions and log it into the console.
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
             }
         }
+        }
     }
-}
+
 
 
 
