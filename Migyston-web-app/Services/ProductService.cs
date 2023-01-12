@@ -53,20 +53,20 @@ namespace Migyston_web_app.Services
                 return;
 
             Products.Remove(product);
-            deleteProduct(product);
+            DeleteProduct(product);
         }
 
-
-        /*
+        
         public static void Update(Product product)
         {
+            UpdateProduct(product);
             var index = Products.FindIndex(p => p.id == product.id);
             if (index == -1)
                 return;
 
             Products[index] = product;
         }
-        */
+        
 
         //---OWN METHODS
         public static async void SaveProduct(Product product)
@@ -80,10 +80,9 @@ namespace Migyston_web_app.Services
                 var response = await client.PostAsync(url, data);
 
                 string result = response.Content.ReadAsStringAsync().Result;
-                Console.WriteLine(result);
         }
 
-        public static async void deleteProduct(Product product)
+        public static async void DeleteProduct(Product product)
         {
             var url = "http://localhost:5014/Product/" + product.id;
             using var client = new HttpClient();
@@ -93,7 +92,19 @@ namespace Migyston_web_app.Services
             string result = response.Content.ReadAsStringAsync().Result;
             Console.WriteLine(result);
         }
+        public static async void UpdateProduct(Product product)
+        {
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(product);
+            var data = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
 
+            var url = "http://localhost:5014/Product";
+            using var client = new HttpClient();
+
+            var response = await client.PutAsync(url, data);
+
+            string result = response.Content.ReadAsStringAsync().Result;
+            Console.WriteLine(result);
+        }
 
 
 

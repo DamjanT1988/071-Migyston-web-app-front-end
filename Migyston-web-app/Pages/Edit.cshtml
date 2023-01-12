@@ -14,10 +14,25 @@
             Edit a product article below; use browsers seacrh function to find (ctrl+f):
         </p>
 
+                        <form >
+                    <input
+                        id="searchbar"
+                        type="text"
+                        class="form-control-lg"
+                        placeholder="key words" />
+                    <br /><br />
+            <button class="btn btn-primary">Search!</button>
+            <br /><br />
+                </form>
+                <form>
+            <button class="btn btn-primary">Reload list!</button>
+        </form>
+
+
         <form method="post">
             <div asp-validation-summary="All"></div>
 
-            <div>
+            <div class="listobject">
                 @foreach (var product in Model.products)
         {
             <h3>@product.product_title <br/>Article # @product.id</h3>
@@ -71,6 +86,32 @@
         </form>
     </div>
  
+<script>
+/*
+    document.getElementById("searchbar").addEventListener('change', (event) => {
+        //event.preventDefault();
+            let input = event.target.value;
+        //function someFunction(event) {
+        //    console.log(event.target.value);
+        //}
+         //store list objects identifier
+        let x = document.getElementsByClassName('listobject');
+        let i;
+
+//loot through all HTML-objects
+        for (i = 0; i < x.length; i++) {
+            //hide non-match objects
+            if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                x[i].style.display = "none";
+            };
+            //show matched objects
+            else {
+                x[i].style.display = "item";
+            };
+        };
+        });
+        */
+    </script>
 
 <style>
     h1 {

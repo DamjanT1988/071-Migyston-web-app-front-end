@@ -30,7 +30,7 @@ namespace Migyston_web_app.Pages
             {
                 return Page();
             }
-            ProductService.Add(NewProduct);
+            ProductService.Update(NewProduct);
             return RedirectToAction("Get");
         }
 
