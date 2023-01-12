@@ -56,6 +56,8 @@ namespace Migyston_web_app.Services
             deleteProduct(product);
         }
 
+
+        /*
         public static void Update(Product product)
         {
             var index = Products.FindIndex(p => p.id == product.id);
@@ -64,6 +66,7 @@ namespace Migyston_web_app.Services
 
             Products[index] = product;
         }
+        */
 
         //---OWN METHODS
         public static async void SaveProduct(Product product)

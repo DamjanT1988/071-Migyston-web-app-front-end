@@ -1,8 +1,110 @@
 ﻿@page
-@model EditModel
+@using Migyston_web_app.Models
+@model Migyston_web_app.Pages.EditModel
 @{
     ViewData["Title"] = "Edit";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>...</p>
+<h1 class="display-3">EDIT</h1>
+<br />
+<div class="row">
+    <div class="col-md bg-dark bg-gradient text-white p-4">
+        <h2 class='display-4'>EDIT PRODUCT</h2>
+        <p>
+            Edit a product article below; use browsers seacrh function to find (ctrl+f):
+        </p>
+
+        <form method="post">
+            <div asp-validation-summary="All"></div>
+
+            <div>
+                @foreach (var product in Model.products)
+        {
+            <h3>@product.product_title <br/>Article # @product.id</h3>
+                <label class="form-control-lg" asp-for="NewProduct.product_title">Name:</label>
+                <br />
+                    <input type="text" asp-for="NewProduct.product_title" class="mr-5" value="@product.product_title">
+                <br />
+
+                <label class="form-control-lg" asp-for="NewProduct.ean_number">EAN:</label>
+                <br />
+                <input type="text" asp-for="NewProduct.ean_number" class="mr-5" value="@product.ean_number">
+                <br />
+
+                <label class="form-control-lg" asp-for="NewProduct.product_description">Description:</label>
+                <br />
+                <input type="text" asp-for="NewProduct.product_description" class="mr-5" value="@product.product_description">
+                <br />
+
+                <label class="form-control-lg" asp-for="NewProduct.price">Price:</label>
+                <br />
+                <input type="number" asp-for="NewProduct.price" class="mr-5" value="@product.price"/>
+                <br />
+
+                <label class="form-control-lg" asp-for="NewProduct.amount_storage">Amount:</label>
+                <br />
+                <input type="number" asp-for="NewProduct.amount_storage" class="mr-5" value="@product.amount_storage"/>
+                <br />
+
+                <label class="form-control-lg" asp-for="NewProduct.expiration_date">Exp. Date</label>
+                <br />
+                <input type="text" asp-for="NewProduct.expiration_date" class="mr-5" value="@product.expiration_date" />
+                <br />
+
+                <label class="form-control-lg" asp-for="NewProduct.category">Category</label>
+                <br />
+                    <select asp-for="NewProduct.category" asp-items="Html.GetEnumSelectList<ProductSize>()" class="mr-5" value="@product.category"></select>
+                <br />
+
+                <label class="form-control-lg" asp-for="NewProduct.isSwedish">Made in Sweden</label>
+                <br />
+                <input type="checkbox" asp-for="NewProduct.isSwedish" class="mr-5" value="@product.isSwedish">
+                    <br />
+                    <br />
+               
+                <button class="btn btn-primary">Update information!</button>
+
+                    <hr />
+                    <br />
+                    }
+            </div>
+        </form>
+    </div>
+ 
+
+<style>
+    h1 {
+        text-align: center;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 1.8em;
+    }
+
+        h3 {
+            font-size: 2.2em;
+        }
+
+    button {
+        font-size: 2em;
+        font-weight:800;
+    }
+
+    strong, label {
+        font-size: 1.35em;
+    }
+
+    hr {
+        color: yellow;
+        border:20px;
+    }
+
+    .col-md {
+        text-align: center;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

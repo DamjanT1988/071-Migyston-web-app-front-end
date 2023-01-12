@@ -1,10 +1,20 @@
 ﻿@page
-@model IndexModel
+@using Migyston_web_app.Models
+@model Migyston_web_app.Pages.IndexModel
 @{
     ViewData["Title"] = "Start";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to Migyston Intranet Inventory Service!</h1>
-    <p></p>
+    <p>INFORMATION:
+        <br/>
+        Navigate above to add and edit products
+    </p>
 </div>
+
+        @foreach (var product in Model.products){}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

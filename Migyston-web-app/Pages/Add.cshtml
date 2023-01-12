@@ -5,77 +5,138 @@
     ViewData["Title"] = "Add";
 }
 
-<h1>Product List</h1>
-<form method="post" class="card p-3">
-    <div class="row">
+<h1 class="display-3">ADD</h1>
+<br />
+<div class="row">
+            <div class="col-md bg-dark bg-gradient text-white p-4">
+              <h2 class='display-4'>ADD PRODUCT</h2>
+              <p>
+                Add a new product article below; title and EAN number must be filled:
+              </p>
+
+<form method="post">
         <div asp-validation-summary="All"></div>
-    </div>
-    <div class="form-group mb-0 align-middle">
-        <label asp-for="NewProduct.product_title">Name:</label>
-        <input type="text" asp-for="NewProduct.product_title" class="mr-5">
+    
+    <div>
+                <label class="form-control-lg" asp-for="NewProduct.product_title">Name:</label>
+                <br />
+                <input type="text" asp-for="NewProduct.product_title" class="mr-5">
+                <br />
+                
+                <label class="form-control-lg" asp-for="NewProduct.ean_number">EAN:</label>
+                <br />
+                <input type="text" asp-for="NewProduct.ean_number" class="mr-5">
+                <br />
 
-        <label asp-for="NewProduct.ean_number">EAN:</label>
-        <input type="text" asp-for="NewProduct.ean_number" class="mr-5">
+                <label class="form-control-lg" asp-for="NewProduct.product_description">Description:</label>
+                <br />
+                <input type="text" asp-for="NewProduct.product_description" class="mr-5">
+                <br />
 
-        <label asp-for="NewProduct.product_description">Description:</label>
-        <input type="text" asp-for="NewProduct.product_description" class="mr-5">
+                <label class="form-control-lg" asp-for="NewProduct.price">Price:</label>
+                <br />
+                <input type="number" asp-for="NewProduct.price" class="mr-5" />
+                <br />
 
-        <label asp-for="NewProduct.price">Price:</label>
-        <input type="number" asp-for="NewProduct.price" class="mr-5" />
+                <label class="form-control-lg" asp-for="NewProduct.amount_storage">Amount:</label>
+                <br />
+                <input type="number" asp-for="NewProduct.amount_storage" class="mr-5" />
+                <br />
 
-        <label asp-for="NewProduct.amount_storage">Amount:</label>
-        <input type="number" asp-for="NewProduct.amount_storage" class="mr-5" />
+                <label class="form-control-lg" asp-for="NewProduct.expiration_date">Exp. Date</label>
+                <br />
+                <input type="text" asp-for="NewProduct.expiration_date" class="mr-5" />
+                <br />
 
-        <label asp-for="NewProduct.expiration_date">Exp. Date</label>
-        <input type="text" asp-for="NewProduct.expiration_date" class="mr-5" />
+                <label class="form-control-lg" asp-for="NewProduct.category">Category</label>
+                <br />
+                <select asp-for="NewProduct.category" asp-items="Html.GetEnumSelectList<ProductSize>()" class="mr-5"></select>
+                <br />
 
-        <label asp-for="NewProduct.category">Category</label>
-        <select asp-for="NewProduct.category" asp-items="Html.GetEnumSelectList<ProductSize>()" class="mr-5"></select>
-
-        <label asp-for="NewProduct.isSwedish">Made in Sweden</label>
-        <input type="checkbox" asp-for="NewProduct.isSwedish" class="mr-5">
-
+                <label class="form-control-lg" asp-for="NewProduct.isSwedish">Made in Sweden</label>
+                <br />
+                <input type="checkbox" asp-for="NewProduct.isSwedish" class="mr-5">
+                <br />
 
         <button class="btn btn-primary">Add</button>
     </div>
 </form>
+    </div>
 
-<table class="table mt-5">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">EAN #</th>
-            <th scope="col">Description</th>
-            <th scope="col">Price</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Exp. Date</th>
-            <th scope="col">Category</th>
-            <th scope="col">Swedish?</th>
-            <th scope="col">Delete</th>
-        </tr>
-    </thead>
+
+
+    <div class="col-md bg-dark bg-gradient text-white p-4">
+        <h2 class='display-4'>PRODUCT LIST</h2>
+        <p>
+            The latest new products are shown first:
+        </p>
+
     @foreach (var product in Model.products)
     {
-        <tr>
-            <td>@product.product_title</td>
-            <td>@product.ean_number</td>
-            <td>@product.product_description</td>
-            <td>@($"{product.price:C}")</td>
-            <td>@product.amount_storage</td>
-            <td>@product.expiration_date</td>
-            <td>@product.category</td>
-            <td>@Model.IsSwedish(product)</td>
+            <article>
+                            <h3>@product.product_title <br/>Article # @product.id</h3>
 
+                <br />
+                <strong>Product title:</strong>
+                <p className="list">@product.product_title</p>
+                
+                <strong>Article number:</strong>
+                <p>@product.id</p>
+                
+                <strong>EAN number:</strong>
+                <p>@product.ean_number</p>
+                
+                <strong>Product description:</strong>
+                <p>@product.product_description</p>
+                
+                <strong>Selling price:</strong>
+                <p>@($"{product.price:C}") kr</p>
+                
+                <strong>Amount in storage:</strong>
+                <p id="storage">@product.amount_storage</p>
+                
+                <strong>Expiration date:</strong>
+                <p>@product.expiration_date</p>
+                
+                <strong>Category:</strong>
+                <p>@product.category</p>
+                
+                <strong>Natíonality:</strong>
+                <p>@Model.IsSwedish(product)</p>
 
-            <td>
                 <form method="post" asp-page-handler="Delete" asp-route-id="@product.id">
                     <button class="btn btn-danger">Delete</button>
                 </form>
-            </td>
-        </tr>
+                <br /><br />
+            </article>
     }
-</table>
+</div>
+</div>
 
+<style>
+    h1 {
+        text-align: center;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 1.8em;
+    }
+
+
+    h3 {
+        font-size: 2.2em;
+    }
+
+
+    strong, label {
+        font-size: 1.35em;
+    }
+
+    .col-md {
+        text-align:center;
+    }
+    </style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
