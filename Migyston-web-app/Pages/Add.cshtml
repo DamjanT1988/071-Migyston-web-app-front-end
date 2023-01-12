@@ -11,7 +11,7 @@
             <div class="col-md bg-dark bg-gradient text-white p-4">
               <h2 class='display-4'>ADD PRODUCT</h2>
               <p>
-                Add a new product article below; title and EAN number must be filled:
+                Add a new product article below; all fields must be filled:
               </p>
 
 <form method="post">
@@ -43,7 +43,7 @@
                 <input type="number" asp-for="NewProduct.amount_storage" class="mr-5" />
                 <br />
 
-                <label class="form-control-lg" asp-for="NewProduct.expiration_date">Exp. Date</label>
+                <label class="form-control-lg" asp-for="NewProduct.expiration_date">Expiration Date</label>
                 <br />
                 <input type="text" asp-for="NewProduct.expiration_date" class="mr-5" />
                 <br />
@@ -55,7 +55,7 @@
 
                 <label class="form-control-lg" asp-for="NewProduct.isSwedish">Made in Sweden</label>
                 <br />
-                <input type="checkbox" asp-for="NewProduct.isSwedish" class="mr-5">
+                <input type="checkbox" asp-for="NewProduct.isSwedish" class="ckbox">
                 <br /><br />
 
         <button class="btn btn-primary">Add</button>
@@ -114,6 +114,11 @@
 </div>
 
 <style>
+    input.ckbox {
+        width: 25px;
+        height: 25px;
+    }
+
     h1 {
         text-align: center;
     }
