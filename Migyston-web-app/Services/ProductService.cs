@@ -97,13 +97,12 @@ namespace Migyston_web_app.Services
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(product);
             var data = new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
 
-            var url = "http://localhost:5014/Product";
+            var url = "http://localhost:5014/Product/" + product.id;
             using var client = new HttpClient();
 
             var response = await client.PutAsync(url, data);
 
             string result = response.Content.ReadAsStringAsync().Result;
-            Console.WriteLine(result);
         }
 
 
@@ -130,7 +129,6 @@ namespace Migyston_web_app.Services
                     {
                         //Retrieve the data from the content of the response, have the await keyword since it is asynchronous.
                         string data = await content.ReadAsStringAsync();
-
 
 
                         dynamic obj = Newtonsoft.Json.JsonConvert.DeserializeObject(data);

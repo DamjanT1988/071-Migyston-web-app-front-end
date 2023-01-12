@@ -10,8 +10,6 @@ namespace Migyston_web_app.Models
     {
         public int id { get; set; }
 
-        //public string product_title { get; set; }
-
         [Required]
         public string? product_title { get; set; }
         public string? ean_number { get; set; }
@@ -26,5 +24,3 @@ namespace Migyston_web_app.Models
         public enum ProductSize { Small, Medium, Large }
    
 }
-
-//asp-items="Html.GetEnumSelectList<ProductSize>()"
