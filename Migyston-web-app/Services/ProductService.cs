@@ -134,7 +134,7 @@ namespace Migyston_web_app.Services
                         dynamic obj = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
 
 
-                        for (int i = 0; i < obj.Count; i++)
+                        for (int i = obj.Count-1; i>=0; i--)
                         {
 
                             Products.Add(new Product
