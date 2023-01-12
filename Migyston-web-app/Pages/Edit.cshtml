@@ -14,21 +14,6 @@
             Edit a product article below; use browsers seacrh function to find (ctrl+f):
         </p>
 
-                        <form >
-                    <input
-                        id="searchbar"
-                        type="text"
-                        class="form-control-lg"
-                        placeholder="key words" />
-                    <br /><br />
-            <button class="btn btn-primary">Search!</button>
-            <br /><br />
-                </form>
-                <form>
-            <button class="btn btn-primary">Reload list!</button>
-        </form>
-        <br />
-
         <form method="post">
             <div asp-validation-summary="All"></div>
 
@@ -68,14 +53,24 @@
                 <br />
 
                 <label class="form-control-lg" asp-for="NewProduct.category">Category</label>
-                <br />
-                    <select asp-for="NewProduct.category" asp-items="Html.GetEnumSelectList<ProductSize>()" class="mr-5" value="@product.category"></select>
+                    <p><strong>@product.category</strong><br /> Change to a new value below:</p> <br />
+                    <select asp-for="NewProduct.category" asp-items="Html.GetEnumSelectList<ProductSize>()" class="mr-5" selected="@product.category">
+                        </select>
+
+                        
                 <br />
 
                 <label class="form-control-lg" asp-for="NewProduct.isSwedish">Made in Sweden</label>
-                <br />
-                <input type="checkbox" asp-for="NewProduct.isSwedish" class="mr-5" value="@product.isSwedish">
-                    <input id="id" type="hidden" asp-for="NewProduct.id" class="mr-5" value="@product.id">
+                    <br />
+
+                    @if (product.isSwedish == false)
+                    {
+                        <input type="checkbox" asp-for="NewProduct.isSwedish" class="ckbox" value="@product.isSwedish">
+                    } else {
+                        <input type="checkbox" asp-for="NewProduct.isSwedish" class="ckbox" value="@product.isSwedish" checked>
+                    }
+
+                <input id="id" type="hidden" asp-for="NewProduct.id" class="mr-5" value="@product.id">
                 <br />
                     <br />
                
@@ -88,34 +83,14 @@
         </form>
     </div>
  
-<script>
-/*
-    document.getElementById("searchbar").addEventListener('change', (event) => {
-        //event.preventDefault();
-            let input = event.target.value;
-        //function someFunction(event) {
-        //    console.log(event.target.value);
-        //}
-         //store list objects identifier
-        let x = document.getElementsByClassName('listobject');
-        let i;
-
-//loot through all HTML-objects
-        for (i = 0; i < x.length; i++) {
-            //hide non-match objects
-            if (!x[i].innerHTML.toLowerCase().includes(input)) {
-                x[i].style.display = "none";
-            };
-            //show matched objects
-            else {
-                x[i].style.display = "item";
-            };
-        };
-        });
-        */
-    </script>
 
 <style>
+
+    input.ckbox {
+        width:25px;
+        height:25px;
+    }
+
     h1 {
         text-align: center;
     }
@@ -134,8 +109,12 @@
         font-weight:800;
     }
 
-    strong, label {
-        font-size: 1.35em;
+    label {
+        font-size: 2em;
+    }
+
+    strong {
+        font-size: 1.5em;
     }
 
     hr {
