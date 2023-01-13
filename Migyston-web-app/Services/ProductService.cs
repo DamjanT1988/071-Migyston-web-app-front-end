@@ -42,7 +42,7 @@ namespace Migyston_web_app.Services
         public static void Add(Product product)
         {
             product.id = Products.Count() + 1;
-            Products.Add(product);
+            Products.Insert(0, product);
             SaveProduct(product);
         }
 
