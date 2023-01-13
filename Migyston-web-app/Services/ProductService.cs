@@ -21,7 +21,7 @@ namespace Migyston_web_app.Services
     {
         
         static List<Product> Products { get; }
-        static int nextId = 0;
+        static int nextId = 1;
 
         //constructor
         static ProductService()
@@ -41,7 +41,7 @@ namespace Migyston_web_app.Services
 
         public static void Add(Product product)
         {
-            product.id = ++nextId;
+            product.id = Products.Count() + 1;
             Products.Add(product);
             SaveProduct(product);
         }

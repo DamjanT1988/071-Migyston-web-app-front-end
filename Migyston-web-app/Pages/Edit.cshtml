@@ -14,12 +14,14 @@
             Edit a product article below; latest created shown first; use browsers seacrh function to find (ctrl+f):
         </p>
 
-        <form method="post">
+        @foreach (var product in Model.products) {
+
+        <form method="post" id="@product.id">
+                
+
             <div asp-validation-summary="All"></div>
 
-            <div class="listobject">
-                @foreach (var product in Model.products)
-        {
+   
                     <h3> @product.product_title <br />Article # @product.id</h3>
                 
                 <label class="form-control-lg" asp-for="NewProduct.product_title">Name:</label>
@@ -63,24 +65,23 @@
                 <label class="form-control-lg" asp-for="NewProduct.isSwedish">Made in Sweden</label>
                     <br />
 
-                    @if (product.isSwedish == false)
+                    @if (product.isSwedish == true)
                     {
-                        <input type="checkbox" asp-for="NewProduct.isSwedish" class="ckbox" value="@product.isSwedish">
+                        <input type="checkbox" asp-for="NewProduct.isSwedish" class="ckbox" checked>
                     } else {
-                        <input type="checkbox" asp-for="NewProduct.isSwedish" class="ckbox" value="@product.isSwedish" checked>
+                        <input type="checkbox" asp-for="NewProduct.isSwedish" class="ckbox">
                     }
 
-                <input id="id" type="hidden" asp-for="NewProduct.id" class="mr-5" value="@product.id">
+                <input type="hidden" asp-for="NewProduct.id" class="mr-5" value="@product.id" />
                 <br />
                     <br />
                
-                <button class="btn btn-primary">Update information!</button>
+                <input id="@product.id" type="submit" class="btn btn-primary" value="Update information!" />
 
                     <hr />
-                    <br />
-                    }
-            </div>
+                    <br />   
         </form>
+        }
     </div>
  
 
