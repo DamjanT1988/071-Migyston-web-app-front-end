@@ -71,8 +71,14 @@
                 <br /><br />
                     
                 <input id="@product.id" type="submit" class="btn btn-primary" value="Update information!" />
-                 <hr /><br />
+
         </form>
+            <br />
+            <form method="post" asp-page-handler="Delete" asp-route-id="@product.id">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+
+                <hr /><br />
         }
     </div>
  

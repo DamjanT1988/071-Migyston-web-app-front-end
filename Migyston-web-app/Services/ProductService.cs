@@ -19,14 +19,16 @@ namespace Migyston_web_app.Services
 
     public static class ProductService
     {
-        
+//---START FIELDS
+        //initiate list
         static List<Product> Products { get; }
-        static int nextId = 1;
 
         //constructor
         static ProductService()
         {
+            //initiate list
             Products = new List<Product> { };
+            //get products from API
             GetProducts();
         }
         
@@ -90,7 +92,6 @@ namespace Migyston_web_app.Services
             var response = await client.DeleteAsync(url);
 
             string result = response.Content.ReadAsStringAsync().Result;
-            Console.WriteLine(result);
         }
         public static async void UpdateProduct(Product product)
         {
